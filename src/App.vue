@@ -46,7 +46,6 @@ export default {
       prizes: [],
       prizes_2017: [],
       prize_name: '',
-      prize_icon: '',
       prize_rotate: [],
       prize_transition: '',
       each_deg: 0,
@@ -56,7 +55,7 @@ export default {
       index: 0,
       current_year: 2017,
       duration: 3000,
-      time_remaining: 20,
+      time_remaining: 10,
       num: 0,
       numbers: [],//紀錄還有獎品的編號
       isClicked: false,//轉動中禁止觸發  

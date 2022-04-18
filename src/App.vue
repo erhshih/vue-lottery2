@@ -236,7 +236,7 @@ body {
   height: 100vh;
   overflow: hidden;
   position: relative;
-  background-color: #7da8e1;
+  background-color: #f3f8ff;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;

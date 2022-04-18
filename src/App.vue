@@ -7,7 +7,7 @@
           <span></span>
         </div>
       </div>
-      <!-- lucky wheel -->
+  
       <div class="container">
         <div v-for="(item) in prizes" :key="item.name" ref="item" :class="itemClass">
           <div class="item-content">
@@ -19,7 +19,6 @@
         </div>
       </div>
 
-      <!-- display results -->
       <transition name="slide-fade">
         <div class="prize" v-if="isShow==isClicked">
           <div class="prize-container">
@@ -69,11 +68,7 @@ export default {
       let vm = this
       vm.initPrize()
     },
-    // watch: {
-    //   current_year: {
-    //     handler: 'restart',
-    //   }
-    // },
+
     computed: {
       // 判斷轉盤 class
       itemClass() {
@@ -84,7 +79,7 @@ export default {
     },
     methods: {
       prizeActive() {
-        // 抽到獎品後變更 item 的 css
+       
         let vm = this
         setTimeout(() => {
           vm.$refs.item[vm.index].classList.value = `${vm.itemClass} active`
@@ -109,7 +104,7 @@ export default {
       },
 
       degree(num) {
-        // 計算每個轉盤角度
+  
         let vm = this
         for (let i = 1; i <= num; i++) {
           let deg = 360 / num
@@ -120,7 +115,6 @@ export default {
         }
       },
       numberArray() {
-        // 產生獎品 index 編號 => [0,1,2,3]
         let vm = this
         vm.numbers = vm.prizes.map((prize, index) => {
           return index
@@ -128,7 +122,7 @@ export default {
       },
       rotateHandler(num) {
         let vm = this
-        // 刪去沒有獎品的 index
+
         vm.prizes.filter((prize, index) => {
           let filterArray
           if (prize.count <= 0) {
@@ -141,46 +135,43 @@ export default {
 
         if (vm.time_remaining > 0) {
           vm.$refs.item[vm.index].classList.value = vm.itemClass
-          // 執行旋轉
+ 
           vm.prize_draw(num)
         } else if (vm.time_remaining <= 0) {
           alert("是否重製獎品數量")
-          // vm.$refs.item[vm.index].classList.value = vm.itemClass
-          // vm.restart()
+
         }
       },
       prize_draw() {
-        // 執行抽獎
+     
         let vm = this
         if (vm.isClicked) return
         vm.isShow = vm.isClicked
 
-        // 移除抽到獎品 active 狀態
         vm.$refs.item[vm.index].classList.value = vm.itemClass
 
-        // 取出 0-3之間隨機整數
+
         vm.index = vm.numbers[Math.floor(Math.random() * vm.numbers.length)]
         console.log('1.剩餘牌號', vm.numbers)
 
-        // 預先旋轉三圈
+   
         let circle = 3
         let degree
-        //degree=初始角度 + 旋轉3圈 + 獎品旋轉角度[隨機數] - 餘數
+ 
         degree = vm.start_deg + circle * 360 + vm.prize_rotate[vm.index] - vm.start_deg % 360 + 45
 
-        // 將初始角度 start_deg:0度 = 旋轉後的角度 degree，下次執行從當下角度開始
         vm.start_deg = degree
-        //綁定旋轉角度到指針
+    
         vm.rotate_deg = `rotate(${degree}deg)`
 
         vm.prize_transition = `all ${vm.duration / 1000}s cubic-bezier(0.42, 0, 0.2, 0.91)`
         vm.time_remaining--
         vm.isClicked = true
 
-        // 取當下開始角度的餘數，與輪盤角度比對(除錯用)
+
         let remainder = vm.start_deg % 360
         if (remainder <= 0) {
-          // 為了不產生負數或0，加360
+ 
           vm.current_deg = remainder + 360 
 
         } else if (remainder > 0) {
@@ -188,7 +179,7 @@ export default {
         }
         console.log('2.執行旋轉', degree, 'index', vm.index)
 
-        // 將vm.index設為抽中獎品索引數，獎品抽完的索引數將不再出現，直到獎品全數抽完，重新 RESET
+
         let prize = vm.prizes[vm.index]
         vm.prize_name = prize.name
      
@@ -198,7 +189,7 @@ export default {
           console.log('3.旋轉角度:', vm.current_deg, '獎品:', prize.name, '剩餘數量:', prize.count, ' index', vm.index)
         }, vm.duration);
 
-        // 點選動畫結束後，將"已點選"改回"未點選"
+
         setTimeout(() => {
           if (vm.isClicked === true) {
             vm.isClicked = false
@@ -419,7 +410,7 @@ button:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  z-index: 1000;
+  z-index: 900;
   position: absolute;
   color: #e94e4e;
   font-size: 2rem;
@@ -440,6 +431,7 @@ button:focus {
   -webkit-transform-origin: 64px 204px;
           transform-origin: 64px 204px;
   cursor: pointer;
+  z-index: 900;
 }
 
 .pointer-container .pointer span {
@@ -566,11 +558,13 @@ button:focus {
       -ms-flex-pack: center;
           justify-content: center;
   padding-top: 2%;
+  z-index: 100000;
 }
 
 .prize .prize-container {
   width: 1280px;
   position: relative;
+  z-index: 100000;
 }
 
 .prize .prize-title {
